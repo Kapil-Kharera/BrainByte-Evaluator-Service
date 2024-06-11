@@ -6,7 +6,8 @@ const { REDIS_PORT, REDIS_HOST } = serverConfig;
 
 const redisConfig = {
     port: REDIS_PORT,
-    host: REDIS_HOST
+    host: REDIS_HOST,
+    maxRetriesPerRequest: null
 };
 
 const redisConnection = new Redis(redisConfig);
