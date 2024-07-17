@@ -90,6 +90,7 @@ import { ParsedQs } from "qs";
 
 import redisConnection from "./config/redisConfig";
 import serverConfig from "./config/serverConfig";
+import runPython from "./containers/runPythonDocker";
 import sampleQueueProducer from "./producers/sampleQueueProducer";
 import apiRouter from "./routes";
 import SampleWorker from "./workers/sampleWorker";
@@ -167,6 +168,17 @@ const startServer = async () => {
         console.log('  curl http://localhost:3000/add?title=Example');
         console.log('To populate the queue with custom options (opts), run:');
         console.log('  curl http://localhost:3000/add?title=Test&opts[delay]=9');
+        
+        // const code = `print("hello")`;
+        const code =   `x = input()
+                        print("value fo x is ", x)
+                        for i in range(int(x)): 
+                            print(i)
+                        `;
+        
+        const inputCase = `100 200`;
+
+        runPython(code, inputCase);
     });
 };
 
