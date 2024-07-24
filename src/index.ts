@@ -90,7 +90,9 @@ import { ParsedQs } from "qs";
 
 import redisConnection from "./config/redisConfig";
 import serverConfig from "./config/serverConfig";
-import runPython from "./containers/runPythonDocker";
+import runCPP from "./containers/runCPPDocker";
+// import runJava from "./containers/runJavaDocker";
+// import runPython from "./containers/runPythonDocker";
 import sampleQueueProducer from "./producers/sampleQueueProducer";
 import apiRouter from "./routes";
 import SampleWorker from "./workers/sampleWorker";
@@ -170,15 +172,49 @@ const startServer = async () => {
         console.log('  curl http://localhost:3000/add?title=Test&opts[delay]=9');
         
         // const code = `print("hello")`;
-        const code =   `x = input()
-                        print("value fo x is ", x)
-                        for i in range(int(x)): 
-                            print(i)
-                        `;
-        
-        const inputCase = `100 200`;
+        // const code =   `x = input()
+        //                 print("value fo x is ", x)
+        //                 for i in range(int(x)): 
+        //                     print(i)
+        //                 `;
 
-        runPython(code, inputCase);
+        // const code = `
+        //     import java.util.*;
+        //     public class Main {
+        //         public static void main (String[] args) {
+        //             Scanner scn = new Scanner(System.in);
+        //             int input = scn.nextInt();
+        //             System.out.println("Input value give by user :" + input);
+
+        //             for(int i = 0; i < input; i++) {
+        //                 System.out.println(i);
+        //             }
+        //         }
+        //     }
+        // `;
+
+        const code = `
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int x;
+                cin>>x;
+                cout<<"value of x is "<<x<<"endl;
+
+                for(int i = 0; i < x; i++) {
+                    cout<<i<<" ";
+                }
+
+                cout<<endl;
+                return 0;
+            }
+        `;
+        
+        const inputCase = `10`;
+
+        // runPython(code, inputCase);
+        // runJava(code, inputCase);
+        runCPP(code, inputCase);
     });
 };
 

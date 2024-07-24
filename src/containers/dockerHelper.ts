@@ -3,7 +3,9 @@ import { DOCKER_STREAM_HEADER_SIZE } from "../utils/constants";
 
 export default function decodeDockerStream(buffer:Buffer):DockerStreamOutput {
     let offset = 0;
+
     const output:DockerStreamOutput = { stdout: "", stderr: ""};
+    
     while(offset < buffer.length) {
         const typeOfStream = buffer[offset];
         const length = buffer.readUInt32BE(offset + 4);
